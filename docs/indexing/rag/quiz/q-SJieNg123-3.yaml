@@ -7,7 +7,7 @@ options:
   - text: "工程師 A：這個機制的本質是以算力換取記憶體。因為短文字的原始資料大小通常遠小於 float32 的高維度向量，系統可以丟棄精確向量，只保留壓縮索引與短文字。在搜尋第二階段，才針對少數候選節點即時重算精確向量，藉此在極低記憶體佔用下修復 Recall"
     correct: true
     explanation: |
-      這完美切中 LEANN 的核心精神。對於短文字而言，Embedding 是一種 Space Amplification 的過程（例如幾十 byte 的字串變成 3KB 的向量）。捨棄龐大的靜態向量，改在 Reranking 階段動態重算少數候選者的向量，能將記憶體用量壓到極致，
+      正確。對於短文字而言，Embedding 會帶來 Space Amplification（例如幾十 byte 的字串變成 3KB 的向量）。捨棄龐大的靜態向量，改在 Reranking 階段動態重算少數候選者的向量，能將記憶體用量壓到極致，
       同時利用精確距離校正 PQ 與 Graph Pruning 帶來的誤差。
   - text: "工程師 B：動態計算是為了在第一階段的 Graph Routing 中擺脫對 PQ 的依賴。系統在遍歷圖的過程中，針對路徑上遇到的每一個節點，即時載入硬碟資料並算出精確 Embedding，消除走錯路徑的機率。"
     explanation: |
